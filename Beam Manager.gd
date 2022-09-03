@@ -44,10 +44,6 @@ func _process(delta):
 	beam_position += get_overall_power() * delta
 	beam_position = clamp(beam_position, 0, 1)
 
-	print(left_meter_state.to_s())
-	print(right_meter_state.to_s())
-	print(beam_position)
-
 	if beam_position == 0:
 		print("game over")
 	if beam_position == 1:
