@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Beam Manager.gd" type="Script" id=1]
+
+[sub_resource type="Curve" id=1]
+min_value = -1.0
+_data = [ Vector2( 0, -1 ), 0.0, 0.0, 0, 0, Vector2( 0.2, -1 ), 0.0, 0.0, 0, 0, Vector2( 0.373626, 0.163636 ), 0.0, 0.0, 0, 0, Vector2( 0.450549, -0.2 ), 0.0, 0.0, 0, 0, Vector2( 0.563187, 0.127273 ), 0.0, 0.0, 0, 0, Vector2( 0.642857, -0.145455 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[node name="Beam Manager" type="Node2D"]
+script = ExtResource( 1 )
+meter_push_increase_amount = 0.01
+meter_decrease_acceleration = 0.1
+overexert_stun_time = 1.0
+power_by_meter_position = SubResource( 1 )
+input_action_prefix = "push_"
