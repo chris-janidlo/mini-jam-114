@@ -3,6 +3,7 @@ extends Node2D
 export var meter_push_increase_amount: float
 export var meter_decrease_acceleration: float
 export var overexert_stun_time: float
+export var overexert_stun_meter_penalty: float
 
 export var power_by_meter_position: Curve
 export var power_multiplier: float
@@ -53,10 +54,11 @@ func _process(delta):
 
 func _manage_meter(delta: float, meter: MeterState) -> void:
 	meter.stun_timer -= delta
-	if meter.stun_timer > 0:
-		return
 
-	if Input.is_action_just_pressed(input_action_prefix + meter.side):
+	var pressed := Input.is_action_just_pressed(input_action_prefix + meter.side)
+	var stunned := meter.stun_timer > 0
+
+	if pressed and not stunned:
 		meter.position += meter_push_increase_amount
 		meter.velocity = 0
 	else:
@@ -64,8 +66,9 @@ func _manage_meter(delta: float, meter: MeterState) -> void:
 		meter.position -= meter.velocity * delta
 
 	meter.position = clamp(meter.position, 0, 100)
-	if meter.position == 100:
+	if not stunned and meter.position == 100:
 		meter.stun_timer = overexert_stun_time
+		meter.position -= overexert_stun_meter_penalty
 
 
 func get_overall_power() -> float:
@@ -73,4 +76,4 @@ func get_overall_power() -> float:
 
 
 func get_side_power(meter: MeterState) -> float:
-	return power_by_meter_position.interpolate_baked(meter.position)
+	return power_by_meter_position.interpolate_baked(meter.position / 100)
