@@ -1,3 +1,4 @@
+tool
 extends Node2D
 
 export var meter_push_increase_amount: float
@@ -5,8 +6,7 @@ export var meter_decrease_acceleration: float
 export var overexert_stun_time: float
 export var overexert_stun_meter_penalty: float
 
-export var power_by_meter_position: Curve
-export var power_multiplier: float
+export(Array, Resource) var power_by_meter_position := [] setget _set_power_by_meter_position
 
 export var input_action_prefix: String
 
@@ -40,6 +40,8 @@ func _ready():
 
 
 func _process(delta):
+	if Engine.editor_hint: return
+
 	_manage_meter(delta, left_meter_state)
 	_manage_meter(delta, right_meter_state)
 	
@@ -50,6 +52,15 @@ func _process(delta):
 		print("game over")
 	if beam_position == 1:
 		print("you win")
+
+
+func _set_power_by_meter_position(value: Array) -> void:
+	power_by_meter_position = []
+	for element in value:
+		var to_append := element as BeamPowerSpec
+		if to_append == null:
+			to_append = BeamPowerSpec.new()
+		power_by_meter_position.append(to_append)
 
 
 func _manage_meter(delta: float, meter: MeterState) -> void:
@@ -76,4 +87,9 @@ func get_overall_power() -> float:
 
 
 func get_side_power(meter: MeterState) -> float:
-	return power_by_meter_position.interpolate_baked(meter.position / 100)
+	for element in power_by_meter_position:
+		if meter.position < element.max_position:
+			return element.power
+	
+	assert(false, "shouldn't ever be here")
+	return NAN

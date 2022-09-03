@@ -1,10 +1,45 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Beam Manager.gd" type="Script" id=1]
+[ext_resource path="res://Beam Power Spec.gd" type="Script" id=2]
 
-[sub_resource type="Curve" id=1]
-min_value = -1.0
-_data = [ Vector2( 0, -1 ), 0.0, 0.0, 0, 0, Vector2( 0.2, -1 ), 0.0, 0.0, 0, 0, Vector2( 0.373626, 0.163636 ), 0.0, 0.0, 0, 0, Vector2( 0.450549, -0.2 ), 0.0, 0.0, 0, 0, Vector2( 0.563187, 0.127273 ), 0.0, 0.0, 0, 0, Vector2( 0.642857, -0.145455 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+script = ExtResource( 2 )
+max_position = 40.0
+power = -10.0
+
+[sub_resource type="Resource" id=2]
+resource_local_to_scene = true
+script = ExtResource( 2 )
+max_position = 50.0
+power = -5.0
+
+[sub_resource type="Resource" id=4]
+script = ExtResource( 2 )
+max_position = 60.0
+power = -2.0
+
+[sub_resource type="Resource" id=5]
+script = ExtResource( 2 )
+max_position = 70.0
+power = 0.0
+
+[sub_resource type="Resource" id=6]
+script = ExtResource( 2 )
+max_position = 85.0
+power = 1.0
+
+[sub_resource type="Resource" id=7]
+script = ExtResource( 2 )
+max_position = 95.0
+power = 3.0
+
+[sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+script = ExtResource( 2 )
+max_position = 100.0
+power = 5.0
 
 [node name="Beam Manager" type="Node2D"]
 script = ExtResource( 1 )
@@ -12,6 +47,5 @@ meter_push_increase_amount = 1.0
 meter_decrease_acceleration = 10.0
 overexert_stun_time = 3.0
 overexert_stun_meter_penalty = 75.0
-power_by_meter_position = SubResource( 1 )
-power_multiplier = 2.0
+power_by_meter_position = [ SubResource( 1 ), SubResource( 2 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 3 ) ]
 input_action_prefix = "push_"
