@@ -1,10 +1,11 @@
 tool
 extends Node2D
 
-export var meter_push_increase_amount: float
-export var meter_decrease_acceleration: float
+export var meter_push_accel: float
+export var meter_push_cut_speed: float
+export var meter_decel: float
+
 export var overexert_stun_time: float
-export var overexert_stun_meter_penalty: float
 
 export(Array, Resource) var power_by_meter_position := [] setget _set_power_by_meter_position
 export var fluctuation_amount_by_power: Curve
@@ -63,21 +64,24 @@ func _set_power_by_meter_position(value: Array) -> void:
 
 func _manage_meter(delta: float, meter: MeterState) -> void:
 	meter.stun_timer -= delta
+	if meter.stun_timer > 0:
+		return
 
-	var pressed := Input.is_action_just_pressed(input_action_prefix + meter.side)
-	var stunned := meter.stun_timer > 0
-
-	if pressed and not stunned:
-		meter.position += meter_push_increase_amount
-		meter.velocity = 0
+	if Input.is_action_just_pressed(input_action_prefix + meter.side):
+		meter.velocity = max(
+			meter_push_cut_speed,
+			meter.velocity + meter_push_accel
+		)
 	else:
-		meter.velocity += meter_decrease_acceleration * delta
-		meter.position -= meter.velocity * delta
+		meter.velocity -= meter_decel * delta
 
+	meter.position += meter.velocity * delta
 	meter.position = clamp(meter.position, 0, 100)
-	if not stunned and meter.position == 100:
+
+	if meter.position == 0 or meter.position == 100:
 		meter.stun_timer = overexert_stun_time
-		meter.position -= overexert_stun_meter_penalty
+		meter.position = 50
+		meter.velocity = 0
 
 
 func _manage_beam(delta: float) -> void:
