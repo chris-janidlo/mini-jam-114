@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Beam Manager.gd" type="Script" id=1]
 [ext_resource path="res://Beam Power Spec.gd" type="Script" id=2]
@@ -41,6 +41,9 @@ script = ExtResource( 2 )
 max_position = 100.0
 power = 5.0
 
+[sub_resource type="Curve" id=8]
+_data = [ Vector2( 0, 0 ), 0.0, 2.70202, 0, 0, Vector2( 0.640187, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -6.89751, 0.0, 0, 0 ]
+
 [node name="Beam Manager" type="Node2D"]
 script = ExtResource( 1 )
 meter_push_increase_amount = 1.0
@@ -48,4 +51,6 @@ meter_decrease_acceleration = 10.0
 overexert_stun_time = 3.0
 overexert_stun_meter_penalty = 75.0
 power_by_meter_position = [ SubResource( 1 ), SubResource( 2 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 3 ) ]
+fluctuation_amount_by_power = SubResource( 8 )
+max_fluctuation = 20.0
 input_action_prefix = "push_"

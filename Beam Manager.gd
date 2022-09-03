@@ -7,6 +7,8 @@ export var overexert_stun_time: float
 export var overexert_stun_meter_penalty: float
 
 export(Array, Resource) var power_by_meter_position := [] setget _set_power_by_meter_position
+export var fluctuation_amount_by_power: Curve
+export var max_fluctuation: float
 
 export var input_action_prefix: String
 
@@ -35,6 +37,8 @@ var right_meter_state: MeterState
 
 
 func _ready():
+	randomize()
+
 	left_meter_state = MeterState.new("left")
 	right_meter_state = MeterState.new("right")
 
@@ -45,13 +49,7 @@ func _process(delta):
 	_manage_meter(delta, left_meter_state)
 	_manage_meter(delta, right_meter_state)
 	
-	beam_position += get_overall_power() * delta
-	beam_position = clamp(beam_position, 0, 100)
-
-	if beam_position == 0:
-		print("game over")
-	if beam_position == 1:
-		print("you win")
+	_manage_beam(delta)
 
 
 func _set_power_by_meter_position(value: Array) -> void:
@@ -82,6 +80,19 @@ func _manage_meter(delta: float, meter: MeterState) -> void:
 		meter.position -= overexert_stun_meter_penalty
 
 
+func _manage_beam(delta: float) -> void:
+	var power := get_overall_power()
+	var fluctuation := _get_fluctuation(power)
+
+	beam_position += (power + fluctuation) * delta
+	beam_position = clamp(beam_position, 0, 100)
+
+	if beam_position == 0:
+		print("game over")
+	if beam_position == 1:
+		print("you win")
+
+
 func get_overall_power() -> float:
 	return (get_side_power(left_meter_state) + get_side_power(right_meter_state))/2
 
@@ -93,3 +104,9 @@ func get_side_power(meter: MeterState) -> float:
 	
 	assert(false, "shouldn't ever be here")
 	return NAN
+
+
+func _get_fluctuation(power: float) -> float:
+	var amount := fluctuation_amount_by_power.interpolate_baked(power)
+	amount *= max_fluctuation
+	return rand_range(-amount, amount)
