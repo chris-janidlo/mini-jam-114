@@ -5,10 +5,11 @@ export var meter_decrease_acceleration: float
 export var overexert_stun_time: float
 
 export var power_by_meter_position: Curve
+export var power_multiplier: float
 
 export var input_action_prefix: String
 
-var beam_position := 0.5
+var beam_position := 50.0
 
 class MeterState:
 	var side: String
@@ -18,9 +19,9 @@ class MeterState:
 
 	func _init(i_side: String) -> void:
 		side = i_side
-		position = 0.5
-		velocity = 0
-		stun_timer = 0
+		position = 50.0
+		velocity = 0.0
+		stun_timer = 0.0
 
 	func to_s() -> String:
 		return (
@@ -42,7 +43,7 @@ func _process(delta):
 	_manage_meter(delta, right_meter_state)
 	
 	beam_position += get_overall_power() * delta
-	beam_position = clamp(beam_position, 0, 1)
+	beam_position = clamp(beam_position, 0, 100)
 
 	if beam_position == 0:
 		print("game over")
@@ -55,16 +56,15 @@ func _manage_meter(delta: float, meter: MeterState) -> void:
 	if meter.stun_timer > 0:
 		return
 
-	var action_name := input_action_prefix + meter.side
-	if Input.is_action_just_pressed(action_name):
+	if Input.is_action_just_pressed(input_action_prefix + meter.side):
 		meter.position += meter_push_increase_amount
 		meter.velocity = 0
 	else:
 		meter.velocity += meter_decrease_acceleration * delta
 		meter.position -= meter.velocity * delta
 
-	meter.position = clamp(meter.position, 0, 1)
-	if meter.position == 1:
+	meter.position = clamp(meter.position, 0, 100)
+	if meter.position == 100:
 		meter.stun_timer = overexert_stun_time
 
 
