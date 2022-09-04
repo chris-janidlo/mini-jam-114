@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Beam Manager.gd" type="Script" id=1]
-[ext_resource path="res://Beam Power Spec.gd" type="Script" id=2]
+[ext_resource path="res://main mechanics/Beam Manager.gd" type="Script" id=1]
+[ext_resource path="res://main mechanics/Beam Power Spec.gd" type="Script" id=2]
 
 [sub_resource type="Resource" id=9]
 script = ExtResource( 2 )
