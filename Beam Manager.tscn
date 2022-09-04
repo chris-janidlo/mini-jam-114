@@ -5,54 +5,51 @@
 
 [sub_resource type="Resource" id=9]
 script = ExtResource( 2 )
-max_position = 0.0
-power = -50.0
+max_position = 5.0
+power = 1.5
 
 [sub_resource type="Resource" id=10]
 script = ExtResource( 2 )
-max_position = 20.0
-power = -20.0
+max_position = 15.0
+power = 0.5
 
-[sub_resource type="Resource" id=1]
-resource_local_to_scene = true
+[sub_resource type="Resource" id=11]
+script = ExtResource( 2 )
+max_position = 25.0
+power = 0.25
+
+[sub_resource type="Resource" id=12]
 script = ExtResource( 2 )
 max_position = 40.0
-power = -10.0
+power = -1.5
 
-[sub_resource type="Resource" id=2]
-resource_local_to_scene = true
-script = ExtResource( 2 )
-max_position = 50.0
-power = -5.0
-
-[sub_resource type="Resource" id=4]
+[sub_resource type="Resource" id=13]
 script = ExtResource( 2 )
 max_position = 60.0
-power = -2.0
+power = -3.0
 
-[sub_resource type="Resource" id=5]
+[sub_resource type="Resource" id=14]
 script = ExtResource( 2 )
-max_position = 70.0
-power = 0.0
+max_position = 75.0
+power = -1.5
 
-[sub_resource type="Resource" id=6]
+[sub_resource type="Resource" id=15]
 script = ExtResource( 2 )
 max_position = 85.0
-power = 1.0
+power = 0.25
 
-[sub_resource type="Resource" id=7]
+[sub_resource type="Resource" id=16]
 script = ExtResource( 2 )
 max_position = 95.0
-power = 3.0
+power = 0.5
 
-[sub_resource type="Resource" id=3]
-resource_local_to_scene = true
+[sub_resource type="Resource" id=17]
 script = ExtResource( 2 )
 max_position = 100.0
-power = 5.0
+power = 1.5
 
 [sub_resource type="Curve" id=8]
-_data = [ Vector2( 0, 0 ), 0.0, 2.70202, 0, 0, Vector2( 0.640187, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -6.89751, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0794062, 0, 0, Vector2( 0.25, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.5, 0.490909 ), 0.0, 0.0, 0, 0, Vector2( 0.747664, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -0.0794062, 0.0, 0, 0 ]
 
 [node name="Beam Manager" type="Node2D"]
 script = ExtResource( 1 )
@@ -60,7 +57,7 @@ meter_push_accel = 30.0
 meter_push_cut_speed = 30.0
 meter_decel = 120.0
 overexert_stun_time = 3.0
-power_by_meter_position = [ SubResource( 9 ), SubResource( 10 ), SubResource( 1 ), SubResource( 2 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 3 ) ]
+power_by_meter_position = [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ) ]
 fluctuation_amount_by_power = SubResource( 8 )
 max_fluctuation = 20.0
 input_action_prefix = "push_"
