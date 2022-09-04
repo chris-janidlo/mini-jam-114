@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Resource",
 "class": "BeamPowerSpec",
 "language": "GDScript",
-"path": "res://Beam Power Spec.gd"
+"path": "res://main mechanics/Beam Power Spec.gd"
 } ]
 _global_script_class_icons={
 "BeamPowerSpec": ""
@@ -25,7 +25,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-BeamManager="*res://Beam Manager.tscn"
+BeamManager="*res://main mechanics/Beam Manager.tscn"
 
 [input]
 
