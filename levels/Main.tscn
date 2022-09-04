@@ -3,10 +3,18 @@
 [ext_resource path="res://UI/Power Meter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://UI/Tug of War.tscn" type="PackedScene" id=2]
 
-[node name="Main" type="Control"]
+[node name="ui" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 
 [node name="Power Meter" parent="." instance=ExtResource( 1 )]
+margin_left = 32.0
+margin_top = 34.0
+margin_right = 32.0
+margin_bottom = 34.0
 
 [node name="Tug of War" parent="." instance=ExtResource( 2 )]
+margin_left = 46.0
+margin_top = 25.0
+margin_right = 46.0
+margin_bottom = 25.0
